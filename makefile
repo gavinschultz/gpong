@@ -25,4 +25,4 @@ install: gpong
 	
 clean:
 	$(DEL) $(OBJDIR)\*.o
-	$(DEL) $(GPONGOUTPUTDIR)\*.exe 
+	$(DEL) $(GPONGOUTPUTDIR)\*.exe
