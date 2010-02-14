@@ -2,6 +2,7 @@
 #define	HRES        640			/* Horizontal resolution */
 #define	VRES        480			/* Vertical resolution */
 #define COLOR_DEPTH 32          /* Colour depth */
+#define FULLSCREEN  0
 
 #define	PADDLE_SPEED    8		/* Maximum velocity for the paddle (per frame) */
 
@@ -18,7 +19,7 @@
 #define MIDLINE_W   4           /* default width of the useless middle line */
 #define MIDLINE_H   10          /* default height of each "perforation" in the middle line */
 #define	BALLSIZE    11			/* starting width/height of the ball in pixels */
-#define	BALLSPEED   7			/* starting ball speed (per frame) */
+#define	BALLSPEED   8 		/* starting ball speed (per frame) */
 #define	GOAL_INSET  40          /* distance of the goal from the edge of the screen, also determines the paddle X position */
 
 #define	GOAL1       1			/* goal 1 (on left) */
@@ -62,3 +63,5 @@ void set_score(int, int);
 // Special functions
 void resize_ball(int);
 void resize_paddle(struct Paddle *, int);
+void randomize_colors();
+void reset_colors();

@@ -7,6 +7,8 @@
 
 static long _start_ticks = 0;
 static int _fps = DEFAULT_FPS;
+static int frame = 0;
+static float frame_rate = 0.0;
 
 void start_timer()
 {
@@ -23,7 +25,7 @@ void set_fps(int fps)
         _fps = fps;
 }
 
-void delay()
+void end_frame()
 {
     long end_ticks = 0;
     end_ticks = SDL_GetTicks() - _start_ticks;
@@ -31,4 +33,26 @@ void delay()
     {
         SDL_Delay((1000 / _fps) - end_ticks); 
     }
+    frame++;
+    frame_rate = 1000 / (SDL_GetTicks() - _start_ticks);
+}
+
+float get_frame_rate()
+{
+    return frame_rate;
+}
+
+void timetrace(char *str, ...)
+{
+#if TIMETRACE 
+    va_list ap;
+    long ticks = 0;
+    ticks = SDL_GetTicks() - _start_ticks;
+
+    va_start(ap, str);
+    printf("Trace time: %d   ", ticks);
+    vprintf(str, ap);
+    putchar('\n');
+    va_end(ap);
+#endif
 }

@@ -9,21 +9,23 @@
  *
  * =====================================================================================
  */
-#include	"SDL/sdl.h"
-#include    "SDL/SDL_mixer.h"
+#include	"sdl.h"
+#include    "SDL_mixer.h"
+#include    "SDL_opengl.h"
 #include	"pong.h"
 #include    "debug.h"
 #include    "util.h"
 #include    "graphics.h"
+#include    "timing.h"
 #include	<math.h>
 #include    <stdio.h>
 #include	<stdlib.h>
-#include    <stdint.h>
 #include	<time.h>
 
 SDL_Surface *screen = NULL;        /* entire screen surface */
 SDL_Surface *p1_score_s = NULL;
 SDL_Surface *p2_score_s = NULL;
+SDL_Surface *diagnostics_s = NULL;
 struct Paddle left_p;
 struct Paddle right_p;
 struct Ball ball;
@@ -31,6 +33,9 @@ int p1_score;
 int p2_score;
 Mix_Chunk *paddle_hit = NULL;
 Mix_Chunk *wall_hit = NULL; 
+uint32_t bg_color;
+uint32_t score_color;
+uint32_t midline_color;
 
 float angle_mult = 1.0;
 float paddle_angles[9] = {-15.0,-8.5,-5.0,-2.5,0.0,2.5,5.0,8.5,15.0};
@@ -53,14 +58,12 @@ struct ScoreBits scorebits[] = {
 int main(int argc, char *argv[])
 {
     SDL_Event event;
+    uint8_t *keystate = NULL;
+    int quit = 0;
 
     init();
     init_game();
     launch_ball();
-
-    uint8_t *keystate = NULL;
-
-    int quit = 0;
 
     /* main loop */
     while(!quit)
@@ -96,6 +99,12 @@ int main(int argc, char *argv[])
                             break;
                         case SDLK_SLASH:
                             accel_paddle(&right_p, -1);
+                            break;
+                        case SDLK_c:
+                            randomize_colors();
+                            break;
+                        case SDLK_b:
+                            reset_colors();
                             break;
                         case SDLK_F9:
                             resize_paddle(&left_p, 10);
@@ -144,20 +153,28 @@ int main(int argc, char *argv[])
             }
         }
 
+        timetrace("start move_objects()");
+
         // Move objects based on their velocity
         move_objects();
+
+        timetrace("end move_objects(), start draw_objects()");
 
         // Redraw the objects on the screen
         draw_objects();
 
-        delay();    // delay for frame rate
+        timetrace("end draw_objects, start delay()");
+
+        end_frame();    // delay for frame rate
+
+        timetrace("end delay()");
     }
     return 0;
 }
 
 void init()
 {
-    trace("Starting trace.");
+    uint32_t video_flags = SDL_OPENGL;
 
     if (SDL_Init(SDL_INIT_EVERYTHING) == -1)
     {
@@ -167,23 +184,34 @@ void init()
 
     atexit(shutdown);
 
-    screen = SDL_SetVideoMode(HRES, VRES, COLOR_DEPTH, SDL_SWSURFACE);
+    SDL_WM_SetCaption("GPong",NULL);
+
+    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+//    SDL_GL_SetAttribute(SDL_GL_SWAP_CONTROL, 1);
+
+    if (FULLSCREEN)
+        video_flags |= SDL_FULLSCREEN;
+
+    screen = SDL_SetVideoMode(HRES, VRES, COLOR_DEPTH, video_flags);
     if (screen == NULL)
     {
         trace("SDl video mode setting failure: %s", SDL_GetError());
         exit(1);
     }
 
-    if( Mix_OpenAudio( 22050, MIX_DEFAULT_FORMAT, 2, 1024 ) == -1 ) {
+    if(!init_gl(HRES, VRES))
+    {
+        trace("Could not initialise OpenGL.");
+        exit(1);
+    }
+
+    if(Mix_OpenAudio( 22050, MIX_DEFAULT_FORMAT, 2, 1024 ) == -1 ) {
         trace("Could not initialise sound mixer: %s", SDL_GetError());
         exit(1);
     } 
 
     paddle_hit = Mix_LoadWAV("blipG5.wav");
     wall_hit = Mix_LoadWAV("blipF4.wav");
-
-    p1_score_s = SDL_CreateRGBSurface(SDL_SWSURFACE, SCORE_W, SCORE_H, COLOR_DEPTH, 0, 0, 0, 0);
-    p2_score_s = SDL_CreateRGBSurface(SDL_SWSURFACE, SCORE_W, SCORE_H, COLOR_DEPTH, 0, 0, 0, 0);
 
     set_fps(FPS);
 }
@@ -201,18 +229,22 @@ void init_game()
     ball.w = BALLSIZE;      ball.h = BALLSIZE;
     ball.color = get_pixel_format(BALLCOLOR);
 
+    bg_color = get_pixel_format(BGCOLOR);
+    midline_color = get_pixel_format(MIDLINECOLOR);
+    score_color = get_pixel_format(BALLCOLOR);
+
     p1_score = 0;           p2_score = 0;
     set_score(GOAL1, 0);    set_score(GOAL2, 0);
 }
 
 void launch_ball()
 {
+    double speed, angle;
     ball.x = (HRES / 3) - (BALLSIZE / 2);
     ball.y = (VRES / 2) - (BALLSIZE / 2);
     srand(time(NULL));
 
-    double speed = BALLSPEED - 2;   // initial launch speed slower than typical game speed
-    double angle;
+    speed = BALLSPEED - 2;   // initial launch speed slower than typical game speed
     angle = (rand() % 2 == 1 ? 1 : -1) * ((double)(rand() % 40));     // initial angle between +/- 10 to 40 degrees
     trace("LAUNCH! Angle: %f", angle);
     ball.xVel = abs(speed * cos(deg_to_rad(angle)));        // abs() used to make it always start to the right
@@ -223,15 +255,9 @@ void shutdown()
 {
     if (screen != NULL)
         SDL_FreeSurface(screen);
-    if (p1_score_s != NULL)
-        SDL_FreeSurface(p1_score_s);
-    if (p2_score_s != NULL)
-        SDL_FreeSurface(p2_score_s);
+    if (diagnostics_s != NULL)
+        SDL_FreeSurface(diagnostics_s);
     
-    Mix_FreeChunk(paddle_hit);
-    Mix_FreeChunk(wall_hit);
-
-    Mix_CloseAudio();
 
     SDL_Quit();
 }
@@ -269,44 +295,41 @@ void draw_objects()
     int i;
     SDL_Rect left_r, right_r, ball_r;
 
-    // draw screen
-    SDL_FillRect(screen,&screen->clip_rect, get_pixel_format(BGCOLOR));
+    glClear( GL_COLOR_BUFFER_BIT );
 
-    // draw middle line
-    SDL_Rect midline;
-    midline.w = 4;          midline.h = 10;
-    midline.x = (HRES / 2) - (midline.w / 2);
-    for (i=0;i<VRES;i+=20)
+    // Draw ball (OpenGL)
+    draw_rect_gl(ball.x, ball.y, ball.w, ball.h);
+
+    // Draw paddles
+    draw_rect_gl(left_p.x, left_p.y, left_p.w, left_p.h);
+    draw_rect_gl(right_p.x, right_p.y, right_p.w, right_p.h);
+
+    // Draw scores
+    set_score(GOAL1, p2_score);
+    set_score(GOAL2, p1_score);
+
+    if (glGetError() != GL_NO_ERROR)
     {
-        midline.y = i;
-        SDL_FillRect(screen, &midline, get_pixel_format(MIDLINECOLOR));
+        trace("Open GL error detected during draw_objects()!");
     }
 
-    apply_surface((HRES / 2) - (HRES / 8) - (SCORE_W), 30, p1_score_s, screen, NULL);
-    apply_surface((HRES / 2) + (HRES / 8), 30, p2_score_s, screen, NULL);
-
-    // draw paddles
-    left_r = get_rect(left_p.x, left_p.y, left_p.w, left_p.h);
-    right_r = get_rect(right_p.x, right_p.y, right_p.w, right_p.h);
-    SDL_FillRect(screen, &left_r, left_p.color);
-    SDL_FillRect(screen, &right_r, right_p.color);
-
-    // draw ball
-    ball_r = get_rect(ball.x, ball.y, ball.w, ball.h);
-    SDL_FillRect(screen, &ball_r, ball.color);
-
-    if (SDL_Flip(screen) == -1)
+    // Draw middle line
+    glLineWidth(4);
+    glLineStipple(10, 0x5555);
+    glBegin(GL_LINES);
     {
-        trace("Could not flip screen in main loop.");
-        exit(1);
+        glVertex2f((HRES/2) - 2, 0);
+        glVertex2f((HRES/2) - 2, VRES);
     }
+    glEnd();
+
+    SDL_GL_SwapBuffers();
 }
 
 void set_score(int g, int score)
 {
     int i;
-    SDL_Surface *score_s;
-    SDL_Rect scorebit;
+    int x, y, w, h;
 
     if (score > MAX_SCORE)
     {
@@ -314,22 +337,24 @@ void set_score(int g, int score)
         exit(1);
     }
 
-    scorebit.w = ceil(SCORE_W / 5);
-    scorebit.h = ceil(SCORE_H / 5);
+    w = ceil(SCORE_W / 5);
+    h = ceil(SCORE_H / 5);
     
-    score_s = (g == GOAL1 ? p2_score_s : p1_score_s);
-
-    // Fill background of score section
-    SDL_FillRect(score_s, &score_s->clip_rect, get_pixel_format(BGCOLOR));
-
     // draw scores
     for (i=0;i<25;i++)
     {
         if (scorebits[score].bits[i])
         {
-            scorebit.x = (i % 5) * scorebit.w;
-            scorebit.y = floor(i / 5) * scorebit.h;
-            SDL_FillRect(score_s, &scorebit, (g == GOAL1 ? right_p.color : left_p.color));
+            if (g == GOAL1)
+            {
+                x = (HRES / 2) + (HRES / 8) + (i % 5) * w;
+            }
+            else
+            {
+                x = (HRES / 2) - (HRES / 8) - (SCORE_W) + (i % 5) * w;
+            }
+            y = 30 + floor(i / 5) * h;
+            glRectf(x, y, x + w, y + h);
         }
     }
 }
@@ -512,4 +537,26 @@ void resize_paddle(struct Paddle *paddle, int increment)
         paddle->h = 10;
     else
         paddle->h += increment;
+}
+
+void randomize_colors()
+{
+    srand(time(NULL) + (rand() % 100));
+    bg_color = RANDOM_PIXEL_FORMAT;
+    score_color = RANDOM_PIXEL_FORMAT;
+    left_p.color = RANDOM_PIXEL_FORMAT;
+    right_p.color = RANDOM_PIXEL_FORMAT;
+    ball.color = RANDOM_PIXEL_FORMAT;
+    set_score(GOAL1, p2_score);     set_score(GOAL2, p1_score);
+}
+
+void reset_colors()
+{
+    srand(time(NULL) + (rand() % 100));
+    bg_color = get_pixel_format(BGCOLOR);
+    score_color = get_pixel_format(BALLCOLOR);
+    left_p.color = get_pixel_format(P1COLOR);
+    right_p.color = get_pixel_format(P2COLOR);
+    ball.color = get_pixel_format(BALLCOLOR);
+    set_score(GOAL1, p2_score);     set_score(GOAL2, p1_score);
 }

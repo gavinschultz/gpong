@@ -1,0 +1,119 @@
+Starting trace.
+LAUNCH! Angle: 39.000000
+hit right paddle! At ball x: 1398   y: 569   , paddle x: 1395   y: 512
+	ball velocity x: 4.000000   y: -3.774313
+	ball angle: 43.313513
+	paddle angle: 8.500000   mult:1.000000
+	reflection angle: -26.313513
+	speed: 5.499585
+hit left paddle! At ball x: 43   y: 73   , paddle x: 45   y: 32
+	ball velocity x: -7.351178   y: 3.633206
+	ball angle: -26.267863
+	paddle angle: 2.500000   mult:1.000000
+	reflection angle: 31.267863
+	speed: 8.200000
+hit right paddle! At ball x: 1398   y: 841   , paddle x: 1395   y: 816
+	ball velocity x: 7.181107   y: 4.357948
+	ball angle: -31.222214
+	paddle angle: -2.500000   mult:1.000000
+	reflection angle: 26.222214
+	speed: 8.400000
+hit left paddle! At ball x: 43   y: 281   , paddle x: 45   y: 232
+	ball velocity x: -7.715831   y: -3.798152
+	ball angle: 26.176565
+	paddle angle: 5.000000   mult:1.000000
+	reflection angle: -16.176565
+	speed: 8.600000
+hit right paddle! At ball x: 1398   y: 148   , paddle x: 1395   y: 112
+	ball velocity x: 8.451939   y: 2.450455
+	ball angle: -16.130915
+	paddle angle: 2.500000   mult:1.000000
+	reflection angle: 21.130915
+	speed: 8.800000
+hit left paddle! At ball x: 37   y: 598   , paddle x: 45   y: 528
+	ball velocity x: -8.395439   y: 3.242932
+	ball angle: -21.085266
+	paddle angle: 15.000000   mult:1.000000
+	reflection angle: 51.085266
+	speed: 9.000000
+hit right paddle! At ball x: 1398   y: 809   , paddle x: 1395   y: 784
+	ball velocity x: 5.782336   y: 7.155738
+	ball angle: -51.039617
+	paddle angle: -2.500000   mult:1.000000
+	reflection angle: 46.039617
+	speed: 9.200000
+hit left paddle! At ball x: 43   y: 298   , paddle x: 45   y: 232
+	ball velocity x: -6.527868   y: 6.763649
+	ball angle: -45.993968
+	paddle angle: 15.000000   mult:1.000000
+	reflection angle: 60.000000
+	speed: 9.400000
+LAUNCH! Angle: -24.000000
+hit right paddle! At ball x: 1396   y: 65   , paddle x: 1395   y: 56
+	ball velocity x: 5.000000   y: 2.439256
+	ball angle: -25.973029
+	paddle angle: -8.500000   mult:1.000000
+	reflection angle: 8.973029
+	speed: 5.563270
+hit left paddle! At ball x: 44   y: 214   , paddle x: 45   y: 168
+	ball velocity x: -8.099749   y: 1.278307
+	ball angle: -8.927380
+	paddle angle: 5.000000   mult:1.000000
+	reflection angle: 18.927380
+	speed: 8.200000
+hit right paddle! At ball x: 1399   y: 598   , paddle x: 1395   y: 544
+	ball velocity x: 7.946272   y: 2.723373
+	ball angle: -18.881731
+	paddle angle: 8.500000   mult:1.000000
+	reflection angle: 35.881731
+	speed: 8.400000
+hit left paddle! At ball x: 44   y: 95   , paddle x: 45   y: 16
+	ball velocity x: -6.969566   y: -5.038368
+	ball angle: 35.836081
+	paddle angle: 15.000000   mult:1.000000
+	reflection angle: -5.836081
+	speed: 8.600000
+hit right paddle! At ball x: 1399   y: 0   , paddle x: 1395   y: 0
+	ball velocity x: 8.754435   y: 0.894357
+	ball angle: -5.790432
+	paddle angle: -15.000000   mult:1.000000
+	reflection angle: -24.209568
+	speed: 8.800000
+hit left paddle! At ball x: 38   y: 444   , paddle x: 45   y: 384
+	ball velocity x: -8.209255   y: 3.688920
+	ball angle: -24.163919
+	paddle angle: 15.000000   mult:1.000000
+	reflection angle: 54.163919
+	speed: 9.000000
+hit right paddle! At ball x: 1399   y: 655   , paddle x: 1395   y: 592
+	ball velocity x: 5.389882   y: 7.455814
+	ball angle: -54.118269
+	paddle angle: 15.000000   mult:1.000000
+	reflection angle: 60.000000
+	speed: 9.200000
+hit left paddle! At ball x: 43   y: 649   , paddle x: 45   y: 624
+	ball velocity x: -4.704321   y: -8.138143
+	ball angle: 59.954351
+	paddle angle: -2.500000   mult:1.000000
+	reflection angle: -60.000000
+	speed: 9.400000
+LAUNCH! Angle: 8.000000
+hit right paddle! At ball x: 1396   y: 445   , paddle x: 1395   y: 448
+	ball velocity x: 5.000000   y: 0.834618
+	ball angle: -9.435803
+	paddle angle: -15.000000   mult:1.000000
+	reflection angle: -20.564197
+	speed: 5.069180
+hit left paddle! At ball x: 41   y: 37   , paddle x: 45   y: 0
+	ball velocity x: -7.678013   y: 2.878908
+	ball angle: -20.518548
+	paddle angle: 2.500000   mult:1.000000
+	reflection angle: 25.518548
+	speed: 8.200000
+hit right paddle! At ball x: 1396   y: 613   , paddle x: 1395   y: 536
+	ball velocity x: 7.581362   y: 3.617036
+	ball angle: -25.472899
+	paddle angle: 15.000000   mult:1.000000
+	reflection angle: 55.472899
+	speed: 8.400000
+LAUNCH! Angle: 14.000000

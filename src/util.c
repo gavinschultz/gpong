@@ -1,4 +1,4 @@
-#include    "SDL/sdl.h"
+#include    "sdl.h"
 #include	"debug.h"
 #include    "util.h"
 

@@ -5,7 +5,7 @@
 
 void trace(char *str, ...)
 {
-#ifdef TRACE
+#if TRACE
     va_list ap;
     va_start(ap, str);
     vprintf(str, ap);
