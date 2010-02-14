@@ -21,6 +21,7 @@
 #include    <stdio.h>
 #include	<stdlib.h>
 #include	<time.h>
+#include    <windows.h>
 
 SDL_Surface *screen = NULL;        /* entire screen surface */
 SDL_Surface *p1_score_s = NULL;
@@ -55,7 +56,7 @@ struct ScoreBits scorebits[] = {
     { 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0 }, // 11
 };
 
-int main(int argc, char *argv[])
+int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int cmdShow)
 {
     SDL_Event event;
     uint8_t *keystate = NULL;
