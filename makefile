@@ -1,28 +1,33 @@
-OBJ = $(patsubst $(SRCDIR)/%.c,$(OBJDIR)/%.o,$(wildcard $(SRCDIR)/*.c)) 
+OBJ = $(patsubst $(SRCDIR)/%.c,$(OBJDIR)/%.obj,$(wildcard $(SRCDIR)/*.c)) 
 DEPS = $(patsubst $(SRCDIR)/%.c,$(INCDIR)/%.h,$(wildcard $(INCDIR)/*.h)) 
-OBJDIR = bin
+OBJDIR = .
 INCDIR = include
 SRCDIR = src
-GPONGOUTPUTDIR = .
+OUTPUTDIR = .
 RESDIR = resources
 LIBDIR = lib
-CC = mingw32-gcc.exe
-CFLAGS = -I$(INCDIR)
-LIBS = -lmingw32 -lSDLmain -lSDL -lSDL_mixer
+CC = cl.exe
+LINK = link.exe
+CFLAGS = /MT /O2 /TC /c /I$(INCDIR)
+LIBS = SDL.lib SDLmain.lib SDL_mixer.lib SDL_ttf.lib glu32.lib opengl32.lib
 DEL = del /F /Q
 COPY = copy /Y
 
 gpong: $(OBJ)
-	$(CC) -o $(GPONGOUTPUTDIR)\$@.exe $(OBJ) $(LIBS)
+	$(LINK) /INCREMENTAL /SUBSYSTEM:CONSOLE /MACHINE:X86 /OUT:"$(OUTPUTDIR)\$@.exe" $(OBJ) $(LIBS)
 	 
-$(OBJDIR)/%.o : $(SRCDIR)/%.c $(DEPS) 
-	$(CC) -c $(CFLAGS) $(CPPFLAGS) $< -o $@
+$(OBJDIR)/%.obj : $(SRCDIR)/%.c $(DEPS) 
+	$(CC) $(CFLAGS) $(CPPFLAGS) $< 
 
 #.PHONY: clean
 install: gpong
-	$(COPY) $(RESDIR)\*.* $(GPONGOUTPUTDIR)\ 
-	$(COPY) $(LIBDIR)\*.* $(GPONGOUTPUTDIR)\ 
+	$(COPY) $(RESDIR)\*.* $(OUTPUTDIR)\ 
+	$(COPY) $(LIBDIR)\*.* $(OUTPUTDIR)\ 
+	$(DEL) $(OUTPUTDIR)\*.ilk
+	$(DEL) $(OUTPUTDIR)\*.obj
 	
 clean:
-	$(DEL) $(OBJDIR)\*.o
-	$(DEL) $(GPONGOUTPUTDIR)\*.exe
+	$(DEL) $(OBJDIR)\*.obj
+	$(DEL) $(OUTPUTDIR)\*.exe
+	$(DEL) $(OUTPUTDIR)\*.manifest
+	$(DEL) $(OUTPUTDIR)\*.ilk
