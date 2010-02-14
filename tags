@@ -1,0 +1,109 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+BALLCOLOR	.\include\pong.h	11;"	d
+BALLSIZE	.\include\pong.h	20;"	d
+BALLSPEED	.\include\pong.h	21;"	d
+BGCOLOR	.\include\pong.h	8;"	d
+Ball	.\include\pong.h	/^struct Ball {$/;"	s
+COLOR_DEPTH	.\include\pong.h	4;"	d
+DEBUG_INC	.\include\debug.h	3;"	d
+DEFAULT_FPS	.\src\timing.c	5;"	d	file:
+FPS	.\include\pong.h	1;"	d
+GOAL1	.\include\pong.h	24;"	d
+GOAL2	.\include\pong.h	25;"	d
+GOAL_INSET	.\include\pong.h	22;"	d
+GRAPHICS_INC	.\include\graphics.h	3;"	d
+HRES	.\include\pong.h	2;"	d
+MAX_ANGLE	.\include\pong.h	26;"	d
+MAX_FPS	.\src\timing.c	6;"	d	file:
+MAX_SCORE	.\include\pong.h	28;"	d
+MIDLINECOLOR	.\include\pong.h	12;"	d
+MIDLINE_H	.\include\pong.h	19;"	d
+MIDLINE_W	.\include\pong.h	18;"	d
+P1COLOR	.\include\pong.h	9;"	d
+P2COLOR	.\include\pong.h	10;"	d
+PADDLE_H	.\include\pong.h	15;"	d
+PADDLE_SPEED	.\include\pong.h	6;"	d
+PADDLE_W	.\include\pong.h	14;"	d
+PI	.\include\util.h	5;"	d
+Paddle	.\include\pong.h	/^struct Paddle { $/;"	s
+RANDOM_PIXEL_FORMAT	.\include\graphics.h	7;"	d
+SCORE_H	.\include\pong.h	17;"	d
+SCORE_W	.\include\pong.h	16;"	d
+ScoreBits	.\include\pong.h	/^struct ScoreBits {$/;"	s
+TIMETRACE	.\include\timing.h	4;"	d
+TRACE	.\include\debug.h	5;"	d
+UTIL_INC	.\include\util.h	3;"	d
+VRES	.\include\pong.h	3;"	d
+_fps	.\src\timing.c	/^static int _fps = DEFAULT_FPS;$/;"	v	file:
+_start_ticks	.\src\timing.c	/^static long _start_ticks = 0;$/;"	v	file:
+accel_paddle	.\src\pong.c	/^void accel_paddle(struct Paddle *paddle, int direction)$/;"	f
+angle_mult	.\src\pong.c	/^float angle_mult = 1.0;$/;"	v
+apply_surface	.\src\graphics.c	/^void apply_surface(int x, int y, SDL_Surface *source, SDL_Surface *dest, SDL_Rect *clip)$/;"	f
+ball	.\src\pong.c	/^struct Ball ball;$/;"	v	typeref:struct:Ball
+bg_color	.\src\pong.c	/^uint32_t bg_color;$/;"	v
+bits	.\include\pong.h	/^    char bits[25];$/;"	m	struct:ScoreBits
+collide	.\src\pong.c	/^void collide(struct Paddle *paddle, struct Ball *b)$/;"	f
+color	.\include\pong.h	/^    uint32_t color;$/;"	m	struct:Ball
+color	.\include\pong.h	/^    uint32_t color;$/;"	m	struct:Paddle
+deg_to_rad	.\src\util.c	/^double deg_to_rad(double degrees)$/;"	f
+diagnostics_s	.\src\pong.c	/^SDL_Surface *diagnostics_s = NULL;$/;"	v
+draw_objects	.\src\pong.c	/^void draw_objects()$/;"	f
+draw_rect_gl	.\src\graphics.c	/^void draw_rect_gl(int x, int y, int w, int h)$/;"	f
+end_frame	.\src\timing.c	/^void end_frame()$/;"	f
+font	.\src\pong.c	/^TTF_Font *font = NULL;$/;"	v
+frame	.\src\timing.c	/^static int frame = 0;$/;"	v	file:
+frame_rate	.\src\timing.c	/^static float frame_rate = 0.0;$/;"	v	file:
+get_frame_rate	.\src\timing.c	/^float get_frame_rate()$/;"	f
+get_pixel_format	.\src\graphics.c	/^long get_pixel_format(long rgbHex)$/;"	f
+get_rect	.\src\graphics.c	/^SDL_Rect get_rect(int x, int y, int w, int h)$/;"	f
+goal	.\src\pong.c	/^void goal(int g)$/;"	f
+h	.\include\pong.h	/^    int x, y, w, h;$/;"	m	struct:Ball
+h	.\include\pong.h	/^    int x, y, w, h;$/;"	m	struct:Paddle
+init	.\src\pong.c	/^void init()$/;"	f
+init_game	.\src\pong.c	/^void init_game()$/;"	f
+init_gl	.\src\graphics.c	/^int init_gl(int hRes, int vRes)$/;"	f
+launch_ball	.\src\pong.c	/^void launch_ball()$/;"	f
+left_p	.\src\pong.c	/^struct Paddle left_p;$/;"	v	typeref:struct:Paddle
+main	.\src\pong.c	/^int main(int argc, char *argv[])$/;"	f
+midline_color	.\src\pong.c	/^uint32_t midline_color;$/;"	v
+move_ball	.\src\pong.c	/^void move_ball(struct Ball *b)$/;"	f
+move_objects	.\src\pong.c	/^void move_objects()$/;"	f
+move_paddle	.\src\pong.c	/^void move_paddle(struct Paddle *paddle)$/;"	f
+p1_score	.\src\pong.c	/^int p1_score;$/;"	v
+p1_score_s	.\src\pong.c	/^SDL_Surface *p1_score_s = NULL;$/;"	v
+p2_score	.\src\pong.c	/^int p2_score;$/;"	v
+p2_score_s	.\src\pong.c	/^SDL_Surface *p2_score_s = NULL;$/;"	v
+paddle_angles	.\src\pong.c	/^float paddle_angles[9] = {-15.0,-8.5,-5.0,-2.5,0.0,2.5,5.0,8.5,15.0};$/;"	v
+paddle_hit	.\src\pong.c	/^Mix_Chunk *paddle_hit = NULL;$/;"	v
+pause	.\src\pong.c	/^void pause()$/;"	f
+randomize_colors	.\src\pong.c	/^void randomize_colors()$/;"	f
+reset_colors	.\src\pong.c	/^void reset_colors()$/;"	f
+resize_ball	.\src\pong.c	/^void resize_ball(int increment)$/;"	f
+resize_paddle	.\src\pong.c	/^void resize_paddle(struct Paddle *paddle, int increment)$/;"	f
+right_p	.\src\pong.c	/^struct Paddle right_p;$/;"	v	typeref:struct:Paddle
+score_color	.\src\pong.c	/^uint32_t score_color;$/;"	v
+scorebits	.\src\pong.c	/^struct ScoreBits scorebits[] = {$/;"	v	typeref:struct:ScoreBits
+screen	.\src\pong.c	/^SDL_Surface *screen = NULL;        \/* entire screen surface *\/$/;"	v
+set_fps	.\src\timing.c	/^void set_fps(int fps)$/;"	f
+set_score	.\src\pong.c	/^void set_score(int g, int score)$/;"	f
+shutdown	.\src\pong.c	/^void shutdown()$/;"	f
+square	.\src\util.c	/^double square(double n)$/;"	f
+start_timer	.\src\timing.c	/^void start_timer()$/;"	f
+timetrace	.\src\timing.c	/^void timetrace(char *str, ...)$/;"	f
+trace	.\src\debug.c	/^void trace(char *str, ...)$/;"	f
+w	.\include\pong.h	/^    int x, y, w, h;$/;"	m	struct:Ball
+w	.\include\pong.h	/^    int x, y, w, h;$/;"	m	struct:Paddle
+wall_hit	.\src\pong.c	/^Mix_Chunk *wall_hit = NULL; $/;"	v
+win	.\src\pong.c	/^void win()$/;"	f
+x	.\include\pong.h	/^    int x, y, w, h;$/;"	m	struct:Ball
+x	.\include\pong.h	/^    int x, y, w, h;$/;"	m	struct:Paddle
+xVel	.\include\pong.h	/^    double xVel, yVel;$/;"	m	struct:Ball
+y	.\include\pong.h	/^    int x, y, w, h;$/;"	m	struct:Ball
+y	.\include\pong.h	/^    int x, y, w, h;$/;"	m	struct:Paddle
+yVel	.\include\pong.h	/^    double xVel, yVel;$/;"	m	struct:Ball
+yVel	.\include\pong.h	/^    int yVel;$/;"	m	struct:Paddle
