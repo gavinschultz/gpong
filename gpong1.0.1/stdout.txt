@@ -1,2 +1,0 @@
-Starting trace.
-LAUNCH! Angle: 16.000000
